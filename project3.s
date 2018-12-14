@@ -81,10 +81,10 @@ check_push:
     addi $a0, $a0, -1                           # update the value of $a0 so that it points to an address before the previous byte
 
     lb $t2, 0($a0)                              # get ASCII value of current character
-    beqz $t2, loop                              # if the value is NUL, branch to loop start
+    beqz $t2, check_push                        # if the value is NUL, branch to loop start
 
     li $a1, 10                                  # load new line char in $a1
-    beq $a1, $t2, loop                          # go to loop start if it is new line char. this is useful when user input is less than 4 char. if input 3 char, 4th byte will be new line char
+    beq $a1, $t2,check_push                     # go to loop start if it is new line char. this is useful when user input is less than 4 char. if input 3 char, 4th byte will be new line char
 
     li $s7, 32                                  # load ASCII of space into $s7
     beq $t2, $s7, handle_space                  # if space is found, let handle_space take care of what to do
@@ -100,7 +100,7 @@ check_push:
     and $s5, $t1, $t4                           # if $t2 has value within range 48 and 57, $s5 will have 1, else 0
     addi $s3, $t2, -48                          # $s3 has required value used for calulation later
     li $t7, 1
-    beq $t7, $s5, calculation                   # if $s5 already has 1, calculate the char's value from ASCII and skip other checks and branch to calculation
+    beq $t7, $s5, push                          # if $s5 already has 1, push the value in $s3 to stack
 
     li $t0, 64
     slt $t1, $t0, $t2
