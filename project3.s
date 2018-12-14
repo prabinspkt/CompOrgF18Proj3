@@ -88,6 +88,11 @@ main:
     syscall
     jal exit
 
+    print_more_than_four:
+    la $a0, input_too_long                      # load address of the string to print
+    li $v0, 4                                   # load code to print string
+    syscall
+
 # Push is called when a valid char is found in check_push subprogram
 push:
     sw $s3, 0($t6)                              # push value present in $s3 to stack, $s3 has value of char to be used for calculation
@@ -184,11 +189,6 @@ check_push:
 
     # After check_push for one char is over, repeat it on another char until all the characters in filtered_input have been gone through
     j check_push
-
-    print_more_than_four:
-    la $a0, input_too_long                      # load address of the string to print
-    li $v0, 4                                   # load code to print string
-    syscall
 
     exit:
     li $v0, 10                                  # load code to exit the program
