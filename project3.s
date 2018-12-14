@@ -71,6 +71,13 @@ main:
     check_push_exit:
     jal calculate                               # call calculate subprogram which uses the values pushed into the stack to calculate the unsigned decimal value of user entered string
 
+calculate:
+    li $t6, 36                                  # $t6 can be used again because its use in push is over
+    lw $s3, 0($sp)                              # get the value from stack and store in $s3 register
+    mult $s0, $s3                               # multiply value with 1 as this is the right-most char in the string
+
+
+
 handle_space:
     beq $zero, $s6, check_push                        # if no alphanumeric char found yet, simply branch to loop
     j print_invalid_value                     # if alphanumeric char was found already and a space is found again, jump to print_invalid_value
