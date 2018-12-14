@@ -46,7 +46,7 @@ main:
 
     skip:
     addi $a0, $a0, 1
-    jal filter_loop
+    j filter_loop
 
     exit_filter_loop:
     # If $s2 is still 0, it means that either the user input is empty or the has only spaces
