@@ -53,6 +53,7 @@ main:
     beqz $s2, print_empty
 
     # START OF INSTRUCTIONS CALCULATE AND CHECK FOR INVALID CHAR IN FILTERED STRING FROM USER INPUT STRING
+    # Initialize values in some registers that will be used later in 'check_push' and 'calculate' subprograms
     li $s0, 1                                   # number to multiply 36 with after each iteration of valid char
     li $s1, 0                                   # sum number based on calculation in each iteration
     li $s4, 0                                   # loop counter
@@ -60,15 +61,10 @@ main:
     la $a0, filtered_input                      # $a0 now holds the address of the first byte of filtered_input
     addi $a0, $a0, 4                            # $a0 points to the 5th byte now. It will point to 4th byte after it is decremented by 1 in the loop before loading byte (see below)
 
+    # PREPARE STACK TO PUSH ITEMS
+    addi $sp, $sp, -20                          # reserves space equivalent to 5 words in memory stack
+    add $t6, $sp, $zero                         # $t6 holds bottom-most address of the stack
     loop:
-    # HOW DOES THIS LOOP WORK?
-    # Loop starts loading bytes from the 4th position i.e. 3rd offset
-    # Exits the loop if invalid value found
-    # Ignores NUL and new line char as user string can be less than 4 char long
-    # Ignore space char if it is discovered before alphanumerica char has been discovered, else print invalid value
-
-    # Maintain a count of numer of characters read using $s4
-    # If count is 4, branch to exit_loop (count starts from 0)
     li $t5, 4
     beq $t5, $s4, loop_exit
     addi $s4, $s4, 1                            # update the value of counter by 1 irrespective of valid/invalid char
