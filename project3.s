@@ -71,6 +71,12 @@ main:
     check_push_exit:
     jal calculate                               # call calculate subprogram which uses the values pushed into the stack to calculate the unsigned decimal value of user entered string
 
+# Push is called when a valid char is found in check_push subprogram
+push:
+    sw $s3, 0($t6)                              # push value present in $s3 to stack, $s3 has value of char to be used for calculation
+    addi $t6, $t6, 4                            # add 4 to the address to which another item will be pushed
+    j check_push
+
 calculate:
     li $t6, 36                                  # $t6 can be used again because its use in push is over
     lw $s3, 0($sp)                              # get the value from stack and store in $s3 register
