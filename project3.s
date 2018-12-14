@@ -80,13 +80,13 @@ main:
     la $a0, input_is_empty                      # load address of the string to print
     li $v0, 4                                   # load code to print string
     syscall
-    jal exit
+    j exit
 
     print_invalid_value:
     la $a0, invalid_number                      # load address of the string to print
     li $v0, 4                                   # load code to print string
     syscall
-    jal exit
+    j exit
 
     print_more_than_four:
     la $a0, input_too_long                      # load address of the string to print
@@ -146,7 +146,7 @@ check_push:
     bne $t5, $s4, skip_check_push_exit          # base case of this recursive implementation is that all of the 4 characters in filtered_input are checked. When all of them are checked and pushed, the subprogram ends.
     jr $ra                                      # exits check_push subprogram
 
-    skip check_push_exit:
+    skip_check_push_exit:
     addi $s4, $s4, 1                            # update the value of counter by 1 irrespective of valid/invalid char
     addi $a0, $a0, -1                           # update the value of $a0 so that it points to an address before the previous byte
 
