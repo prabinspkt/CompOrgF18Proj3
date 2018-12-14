@@ -64,6 +64,12 @@ main:
     # PREPARE STACK TO PUSH ITEMS
     addi $sp, $sp, -20                          # reserves space equivalent to 5 words in memory stack
     add $t6, $sp, $zero                         # $t6 holds bottom-most address of the stack
+
+    jal check_push                              # call check_push subprogram which checks validity of characters in filtered_input and pushes them to stack if they are valid
+
+    # Program reaches this point after successful reading of user string and successful calculation of it's unsigned decimal value
+    check_push_exit:
+    jal calculate                               # call calculate subprogram which uses the values pushed into the stack to calculate the unsigned decimal value of user entered string
     loop:
     li $t5, 4
     beq $t5, $s4, loop_exit
