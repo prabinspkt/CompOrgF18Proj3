@@ -76,6 +76,12 @@ main:
     addi $sp, $sp, 20                           # restore the original address previously stored in $sp
     j exit
 
+    print_empty:
+    la $a0, input_is_empty                      # load address of the string to print
+    li $v0, 4                                   # load code to print string
+    syscall
+    jal exit
+
 # Push is called when a valid char is found in check_push subprogram
 push:
     sw $s3, 0($t6)                              # push value present in $s3 to stack, $s3 has value of char to be used for calculation
@@ -173,13 +179,6 @@ check_push:
     # After check_push for one char is over, repeat it on another char until all the characters in filtered_input have been gone through
     j check_push
 
-    # Program reaches this point after successful reading of user string and successful calculation of it's unsigned decimal value
-
-    print_empty:
-    la $a0, input_is_empty                      # load address of the string to print
-    li $v0, 4                                   # load code to print string
-    syscall
-    jal exit
 
     print_invalid_value:
     la $a0, invalid_number                      # load address of the string to print
