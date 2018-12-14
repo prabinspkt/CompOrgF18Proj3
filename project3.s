@@ -71,6 +71,11 @@ main:
     check_push_exit:
     jal calculate                               # call calculate subprogram which uses the values pushed into the stack to calculate the unsigned decimal value of user entered string
 
+handle_space:
+    beq $zero, $s6, check_push                        # if no alphanumeric char found yet, simply branch to loop
+    j print_invalid_value                     # if alphanumeric char was found already and a space is found again, jump to print_invalid_value
+
+# Check_push subprogram checks the validity of each char in the filtered_input and if the char is valid in base-36 number system, it pushes that char in the stack by calling "push" subprogram. If any invalid char is found at any point, program jumps to the instruction that prints "Invalid base-36 number." and then terminates.
 check_push:
     li $t5, 4
     bne $t5, $s4, skip_check_push_exit          # base case of this recursive implementation is that all of the 4 characters in filtered_input are checked. When all of them are checked and pushed, the subprogram ends.
@@ -123,10 +128,6 @@ check_push:
 
     # After check_push for one char is over, repeat it on another char until all the characters in filtered_input have been gone through
     j check_push
-
-    handle_space:
-    beq $zero, $s6, loop                        # if no alphanumeric char found yet, simply branch to loop
-    jal print_invalid_value                     # if alphanumeric char was found already and a space is found again, jump to print_invalid_value
 
     # Program reaches this point after successful reading of user string and successful calculation of it's unsigned decimal value
     loop_exit:
