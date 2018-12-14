@@ -84,6 +84,9 @@ calculate:
     mult $s0, $s3
     mflo $t3
     add $s1, $s1, $t3
+    mult $s0, $t6
+    mflo $s0
+
 
 handle_space:
     beq $zero, $s6, check_push                        # if no alphanumeric char found yet, simply branch to loop
