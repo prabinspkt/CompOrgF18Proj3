@@ -174,11 +174,6 @@ check_push:
     j check_push
 
     # Program reaches this point after successful reading of user string and successful calculation of it's unsigned decimal value
-    loop_exit:
-    li $v0, 1                                   # load code to print integer
-    add $a0, $zero, $s1                         # load value calculated in the loop
-    syscall
-    jal exit
 
     print_empty:
     la $a0, input_is_empty                      # load address of the string to print
