@@ -108,7 +108,7 @@ check_push:
     and $s5, $t1, $t4                           #if $t2 has value within range 65 and 90, $s5 will have 1, else 0
     addi $s3, $t2, -55                          # $s3 has required value used for calulation later
     li $t7, 1
-    beq $t7, $s5, calculation                   # if $s5 already has 1, calculate the char's value from ASCII and skip other checks and branch to calculation
+    beq $t7, $s5, push                          # if $s5 already has 1, push the value in $s3 to stack
 
     li $t0, 96
     slt $t1, $t0, $t2
@@ -116,7 +116,7 @@ check_push:
     and $s5, $t1, $t4                           #if $t2 has value within range 97 and 122, $s5 will have 1, else 0
     addi $s3, $t2, -87                          # $s3 has required value used for calulation later
     li $t7, 1
-    beq $t7, $s5, calculation                   # if $s5 already has 1, calculate the char's value from ASCII and skip other checks and branch to calculation
+    beq $t7, $s5, push                          # if $s5 already has 1, push the value in $s3 to stack
 
     # If $s5 is still 0, it means that $t2 has an invalid char in base-36 system
     beq $s5, $zero, print_invalid_value         # if $t2 has invalid value, jump to print_invalid_value
@@ -131,8 +131,8 @@ check_push:
     mult $s0, $t6
     mflo $s0
 
-    # Start the loop again
-    jal loop
+    # After check_push for one char is over, repeat it on another char until all the characters in filtered_input have been gone through
+    j check_push
 
     handle_space:
     beq $zero, $s6, loop                        # if no alphanumeric char found yet, simply branch to loop
