@@ -75,7 +75,10 @@ calculate:
     li $t6, 36                                  # $t6 can be used again because its use in push is over
     lw $s3, 0($sp)                              # get the value from stack and store in $s3 register
     mult $s0, $s3                               # multiply value with 1 as this is the right-most char in the string
-
+    mflo $t3                                    # move the result of multiplication in $t3
+    add $s1, $s1, $t3                           # add it to $s1 which currently has 0
+    mult $s0, $t6                               # multiply 1 and 36 to get appropriate base of 36 for next char
+    mflo $s0                                    # move multiplied value to $s0 register
 
 
 handle_space:
