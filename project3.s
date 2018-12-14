@@ -119,12 +119,7 @@ check_push:
     beq $t7, $s5, push                          # if $s5 already has 1, push the value in $s3 to stack
 
     # If $s5 is still 0, it means that $t2 has an invalid char in base-36 system
-    beq $s5, $zero, print_invalid_value         # if $t2 has invalid value, jump to print_invalid_value
-
-    calculation:
-    mult $s0, $s3                               # $s0 has the required power of 36 and $s3 is the value of valid char in 36-base number system
-    mflo $t3
-    add $s1, $s1, $t3                           # add the above multiplication to the value resulting from calculation of previous chars
+    beq $s5, $zero, print_invalid_value         # if $t2 has invalid value, branch to print_invalid_value
 
     # After check_push for one char is over, repeat it on another char until all the characters in filtered_input have been gone through
     j check_push
