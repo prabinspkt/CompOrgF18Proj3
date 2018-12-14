@@ -70,9 +70,13 @@ main:
     # Program reaches this point after successful reading of user string and successful calculation of it's unsigned decimal value
     check_push_exit:
     jal calculate                               # call calculate subprogram which uses the values pushed into the stack to calculate the unsigned decimal value of user entered string
-    loop:
+
+check_push:
     li $t5, 4
-    beq $t5, $s4, loop_exit
+    bne $t5, $s4, skip_check_push_exit          # base case of this recursive implementation is that all of the 4 characters in filtered_input are checked. When all of them are checked and pushed, the subprogram ends.
+    jr $ra                                      # exits check_push subprogram
+
+    skip check_push_exit:
     addi $s4, $s4, 1                            # update the value of counter by 1 irrespective of valid/invalid char
     addi $a0, $a0, -1                           # update the value of $a0 so that it points to an address before the previous byte
 
