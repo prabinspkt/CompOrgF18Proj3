@@ -80,6 +80,10 @@ calculate:
     mult $s0, $t6                               # multiply 1 and 36 to get appropriate base of 36 for next char
     mflo $s0                                    # move multiplied value to $s0 register
 
+    lw $s3, 4($sp)
+    mult $s0, $s3
+    mflo $t3
+    add $s1, $s1, $t3
 
 handle_space:
     beq $zero, $s6, check_push                        # if no alphanumeric char found yet, simply branch to loop
