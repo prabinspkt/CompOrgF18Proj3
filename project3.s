@@ -70,6 +70,11 @@ main:
     # Program reaches this point after successful reading of user string and successful calculation of it's unsigned decimal value
     check_push_exit:
     jal calculate                               # call calculate subprogram which uses the values pushed into the stack to calculate the unsigned decimal value of user entered string
+    li $v0, 1                                   # load code to print integer
+    lw $a0, 16($sp)                             # load calculated unsigned decimal value from stack to $a0 register
+    syscall
+    addi $sp, $sp, 20                           # restore the original address previously stored in $sp
+    j exit
 
 # Push is called when a valid char is found in check_push subprogram
 push:
